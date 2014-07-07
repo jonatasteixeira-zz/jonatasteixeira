@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require_tree . 
 //= require bootstrap
+//
+function show_login()
+{
+  document.getElementById('form-login-group').style.display = 'block';
+  document.getElementById('form-login-btn').style.display = 'none'
+}

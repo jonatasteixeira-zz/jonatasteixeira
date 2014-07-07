@@ -12,22 +12,16 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
+  
   <!-- Just for debugging purposes. Dont actually copy this line! -->
   <!--[if lt IE 9]>
-  
-  
   <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-  
-  
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-</head>
-
-<body>
+  
   <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -45,33 +39,45 @@
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <form class="navbar-form navbar-right" role="form">
-          <div class="form-group">
-            <input type="text" placeholder="Email" class="form-control">
+
+        <div id="form-login-group" style="display:none" >
+          <%= form_for :login, :url => login_path, :html => { :class => "navbar-form navbar-right" } do |f| %>
+            <div class="form-group">
+              <%= f.text_field :username_or_email, :placeholder => "Username or email", :class => "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.password_field :password, :placeholder => "Password", :class => "form-control" %>
+            </div>
+            <%= f.submit "Sign in", :class => "btn btn-success" %>
+          <% end %>
+        </div>
+        <% if signed_in? %> 
+          <div class="navbar-form navbar-right" id="form-login-btn">
+          
+            <%= form_tag  logout_path, method: :delete do %>
+              <%= button_tag type: 'submit', class: "btn btn-success" do %>
+                  <i class="glyphicon glyphicon-user white"></i> Logout
+              <% end %>
+            <% end %>
           </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" class="form-control">
+        <% else %>
+          <div class="navbar-form navbar-right" id="form-login-btn">
+            <button class="btn btn-success" onclick="show_login()">Log in</button>
           </div>
-          <button type="submit" class="btn btn-success">Sign in</button>
-        </form>
+        <% end %>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
   </div><!-- /.navbar -->
+</head>
 
+<body>
   <div class="container">
     <%= yield %>
-
-    <footer>
-      <p>&copy; Jonatas Teixeira 2014</p>
-    </footer>
-
   </div><!--/.container-->
-  
-  <!-- Bootstrap core JavaScript
-  ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="../../dist/js/bootstrap.min.js"></script>
-  <script src="offcanvas.js"></script>
 </body>
+
+<footer>
+  <p>&copy; Jonatas Teixeira 2014</p>
+</footer>
+
 </html>
