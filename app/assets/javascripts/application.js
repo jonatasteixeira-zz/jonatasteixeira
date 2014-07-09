@@ -18,6 +18,6 @@
 //
 function show_login()
 {
-  document.getElementById('form-login-group').style.display = 'block';
-  document.getElementById('form-login-btn').style.display = 'none'
+  document.getElementById('login-group').style.display = 'block';
+  document.getElementById('login-btn').style.display = 'none'
 }

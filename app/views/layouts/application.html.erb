@@ -31,53 +31,79 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Jonatas Teixeira</a>
+        <%= link_to "Jonatas Teixeira", root_path, :class => "navbar-brand" %>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-
-        <div id="form-login-group" style="display:none" >
-          <%= form_for :login, :url => login_path, :html => { :class => "navbar-form navbar-right" } do |f| %>
-            <div class="form-group">
-              <%= f.text_field :username_or_email, :placeholder => "Username or email", :class => "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= f.password_field :password, :placeholder => "Password", :class => "form-control" %>
-            </div>
-            <%= f.submit "Sign in", :class => "btn btn-success" %>
-          <% end %>
-        </div>
-        <% if signed_in? %> 
-          <div class="navbar-form navbar-right" id="form-login-btn">
-          
-            <%= form_tag  logout_path, method: :delete do %>
-              <%= button_tag type: 'submit', class: "btn btn-success" do %>
-                  <i class="glyphicon glyphicon-user white"></i> Logout
+        <ul class="nav navbar-nav navbar-right"> 
+          <% if signed_in? %> 
+            <li class="dropdown">
+              <%= link_to '#', class: "dropdown-toggle", :data =>  { :toggle=>"dropdown" } do %>
+                <span class="glyphicon glyphicon-user"> </span> <%= current_user.name %> <span class="caret"></span>
               <% end %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="navbar-form navbar-right" id="form-login-btn">
-            <button class="btn btn-success" onclick="show_login()">Log in</button>
-          </div>
-        <% end %>
+              <ul class="dropdown-menu" role="menu">
+                <li> <%= link_to "Settings",  user_path(current_user) %> </li>
+                <li><a href="#">-Action</a></li>
+                <li><a href="#">-Action</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">-Action</li>
+                <li> <%= link_to "Logout", logout_path, method: :delete  %> </li>
+              </ul>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "Sign in", "#", :data => { :toggle => "modal", :target => "#loginModal" } %>
+            </li>
+          <% end %>
+        </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
   </div><!-- /.navbar -->
 </head>
 
 <body>
+  <% if not signed_in? %>
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign in</h4>
+          </div>
+          <%= form_for :login, :url => login_path, :class => "form-signin" do |f| %>
+            <div class="modal-body">
+              <div class="field">
+                <%= f.text_field :username_or_email, :placeholder => "Username or email", :class => "form-control" %> 
+              </div>
+              <div class="field">
+                <%= f.password_field :password, :placeholder => "Password", :class => "form-control" %> 
+              </div>
+              <%= f.check_box :remember_me, { :checked => "checked" } %> <%= f.label :remember_me %>  
+            </div>
+            <div class="modal-footer">
+              <%= f.submit "Sign in", :class => "btn btn-success btn-block" %> 
+              <%= link_to "Sign up", new_user_path, :class => "btn btn-primary btn-block", :style => "color:#FFF !important;" %> 
+
+            <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+              --!></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="container">
     <%= yield %>
+
+    <div class="footer">
+      <p class="text-muted"> <center> &copy; Jonatas Teixeira 2014 </center></p>
+    </div>
   </div><!--/.container-->
+    
 </body>
-
-<footer>
-  <p>&copy; Jonatas Teixeira 2014</p>
-</footer>
-
 </html>

@@ -1,7 +1,6 @@
 module SessionsHelper
 
   def sign_in(user)
-    logger.info "logged in"
     session[:current_user_id] = user.id
     self.current_user = user
   end
@@ -23,7 +22,6 @@ module SessionsHelper
   end
 
   def sign_out
-    logger.info "logged out"
     session[:current_user_id] = self.current_user = nil
   end
 
