@@ -8,12 +8,15 @@ Rails.application.routes.draw do
 
   delete 'logout' => "sessions#destroy" 
 
-    
-  resources :posts do
-    resources :comments
+  resources :users do
+    resources :posts
   end
 
   resources :users do
+    resources :comments
+  end
+  
+  resources :posts do
     resources :comments
   end
   

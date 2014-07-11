@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :placeholder => "Title", :class => "form-control" %>
   </div>
   <div class="field">
-    <%= f.label :message %><br>
-    <%= f.text_field :message %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
+    <%= f.text_area :body, :rows => "5", :placeholder => "Input you post here...", :class => "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Save post", :class => "btn btn-lg btn-success btn-block" %>
   </div>
+
+  <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+      <a class="btn btn-large" data-edit="bold"><i class="icon-bold"></i></a>
+    </div>
+
+
 <% end %>

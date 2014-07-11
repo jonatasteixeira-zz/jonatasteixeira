@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require_tree . 
 //= require bootstrap
-//
+
 function show_login()
 {
   document.getElementById('login-group').style.display = 'block';

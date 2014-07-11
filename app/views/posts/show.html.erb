@@ -1,18 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+<h1> <%= @post.title %> </h1>
+
+<p><%= @post.body %></p>
 
 <p>
-  <strong>Message:</strong>
-  <%= @post.message %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @post.user_id %>
+  <strong> <%= User.find(@post.user_id).name %></strong>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
