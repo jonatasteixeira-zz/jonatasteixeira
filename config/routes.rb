@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :assignments
+
+  resources :roles
 
 #  get 'sessions/create'
 

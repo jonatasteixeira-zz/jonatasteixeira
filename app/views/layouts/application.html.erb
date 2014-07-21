@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jonatasteixeira</title>
-
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jonatasteixeira</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'bootstrap-wysiwyg', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  
-  <!-- Just for debugging purposes. Dont actually copy this line! -->
-  <!--[if lt IE 9]>
-  <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <%= javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js", "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js" %>
   <![endif]-->
-  
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
   <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -32,7 +27,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <%= link_to "Jonatas Teixeira", root_path, :class => "navbar-brand" %>
+      <%= link_to "Jonatas Teixeira", root_path, :class => "navbar-brand" %>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -42,30 +37,28 @@
         <ul class="nav navbar-nav navbar-right"> 
           <% if signed_in? %> 
             <li class="dropdown">
-              <%= link_to '#', class: "dropdown-toggle", :data =>  { :toggle=>"dropdown" } do %>
-                <span class="glyphicon glyphicon-user"> </span> <%= current_user.name %> <span class="caret"></span>
-              <% end %>
-              <ul class="dropdown-menu" role="menu">
-                <li> <%= link_to "Settings",  user_path(current_user) %> </li>
-                <li> <%= link_to "Create Post", new_post_path %> </li>
-                <li><a href="#">-Action</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">-Action</li>
-                <li> <%= link_to "Logout", logout_path, method: :delete  %> </li>
-              </ul>
+            <%= link_to '#', class: "dropdown-toggle", :data =>  { :toggle=>"dropdown" } do %>
+              <span class="glyphicon glyphicon-user"> </span> <%= current_user.name %> <span class="caret"></span>
+            <% end %>
+            <ul class="dropdown-menu" role="menu">
+              <li> <%= link_to "Settings",  user_path(current_user) %> </li>
+              <li> <%= link_to "Create Post", new_post_path %> </li>
+              <li><a href="#">-Action</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">-Action</li>
+              <li> <%= link_to "Logout", logout_path, method: :delete  %> </li>
+            </ul>
             </li>
           <% else %>
             <li>
-              <%= link_to "Sign in", "#", :data => { :toggle => "modal", :target => "#loginModal" } %>
+            <%= link_to "Sign in", "#", :data => { :toggle => "modal", :target => "#loginModal" } %>
             </li>
           <% end %>
         </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
   </div><!-- /.navbar -->
-</head>
-
-<body>
+  
   <% if not signed_in? %>
     <!-- Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -88,8 +81,7 @@
             <div class="modal-footer">
               <%= f.submit "Sign in", :class => "btn btn-success btn-block" %> 
               <%= link_to "Sign up", new_user_path, :class => "btn btn-primary btn-block", :style => "color:#FFF !important;" %> 
-
-            <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button>
               --!></div>
           <% end %>
@@ -97,14 +89,20 @@
       </div>
     </div>
   <% end %>
-
+  
   <div class="container">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <%= msg %>
+      <% end %>
+    <% end %>
+    
     <%= yield %>
-
+    
     <div class="footer">
       <p class="text-muted"> <center> &copy; Jonatas Teixeira 2014 </center></p>
     </div>
   </div><!--/.container-->
-    
 </body>
 </html>

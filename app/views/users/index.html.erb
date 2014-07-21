@@ -1,31 +1,36 @@
-<h1>Listing users</h1>
+<div class="page-header">
+  <%= link_to new_user_path, :class => 'btn btn-primary white' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New User
+  <% end %>
+  <h1>Listing users</h1>
+</div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
+<div class="table-responsive">
+  <table class="table table-hover table-triped">
+    <thead>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.username %></td>
-        <td><%= user.email %></td>
-        <td><%= user.password_digest %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= user.password_digest %></td>
+          <td><%= link_to 'Show', user if permitted_to? :show, @user %></td>
+          <td><%= link_to 'Edit', edit_user_path(user) if permitted_to? :edit, @user %></td>
+          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } if permitted_to? :destroy, @user %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <br>
-
-<%= link_to 'New User', new_user_path %>

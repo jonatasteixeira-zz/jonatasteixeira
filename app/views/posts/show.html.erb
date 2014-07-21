@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1> <%= @post.title %> </h1>
+<div class="page-header">
+  <h1> <%= @post.title %> </h1>
+</div>
+<div class="well">
+  <p><%= @post.body %></p>
+  <p> <strong> <%= link_to User.find(@post.user_id).name, user_path(@post.user_id) %></strong></p>
+</div>
 
-<p><%= @post.body %></p>
-
-<p>
-  <strong> <%= User.find(@post.user_id).name %></strong>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Edit', edit_post_path(@post) if permitted_to? :edit, @post %> |
 <%= link_to 'Back', posts_path %>

@@ -1,7 +1,9 @@
-<%= form_for(@post) do |f| %>
+
+<%= form_for @post, :html => { :class => "form-horizontal" } do |f| %>
   <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+    <div id="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h4>
 
       <ul>
       <% @post.errors.full_messages.each do |message| %>
@@ -11,19 +13,22 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.text_field :title, :placeholder => "Title", :class => "form-control" %>
-  </div>
-  <div class="field">
-    <%= f.text_area :body, :rows => "5", :placeholder => "Input you post here...", :class => "form-control" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Save post", :class => "btn btn-lg btn-success btn-block" %>
-  </div>
-
-  <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-      <a class="btn btn-large" data-edit="bold"><i class="icon-bold"></i></a>
+  <div class="form-group">
+    <%= f.label :title, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :title, :placeholder => "Title", :class => "form-control" %>
     </div>
-
+  </div>
+  <div class="form-group">
+    <%= f.label :body, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_area :body, :rows => "5", :placeholder => "Input you post here...", :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "Save post", :class => "btn ibtn-lg btn-success" %>
+    </div>
+  </div>
 
 <% end %>

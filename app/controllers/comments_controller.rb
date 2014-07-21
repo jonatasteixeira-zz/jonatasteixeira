@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  filter_resource_access
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments

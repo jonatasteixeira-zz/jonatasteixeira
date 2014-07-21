@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  filter_resource_access
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
+  before_action :get_info, only: [:new, :create, :edit, :update]
+  
+  # GET /ueers
   # GET /users.json
   def index
     @users = User.all
@@ -61,6 +63,11 @@ class UsersController < ApplicationController
   end
 
   private
+    def get_info
+      @data_tables = ActiveRecord::Base.connection.tables.drop(1)
+      @roles = Role.all
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -68,6 +75,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :username, :email, :password, :password_confirmation)
+      params[:user][:role_id] = Role.find_by_title(:user) if !params[:user][:role_id]
+      params.require(:user).permit(:name, :username, :email, :password, :password_confirmation, :role_id)
     end
 end

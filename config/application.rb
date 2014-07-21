@@ -22,3 +22,4 @@ module Jonatasteixeira
     # config.serve_static_assets = true
   end
 end
+
